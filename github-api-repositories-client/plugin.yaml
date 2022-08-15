@@ -1,0 +1,36 @@
+name: github-api-repositories-client
+description: "Client for GitHub public API - Repositories (C#/dotnet)"
+display-name: github-api-repositories-client
+picture: plugin.png
+category: backend # Ref: https://docs.stackspot.com/latest/docs/creators-guide/yaml/#category
+compatibility:
+  - ".NET"
+  - "C#"
+about: docs/about.md
+usage: docs/usage.md
+use-case: docs/use-case.md
+implementation: docs/implementation.md
+technologies: # Ref: https://docs.stackspot.com/latest/docs/creators-guide/yaml/#technologies
+  - ".NET"
+  - "Api"
+  - "C#"
+  - "Rest"
+types:
+  - app
+inputs:
+  - label: Base namespace
+    type: text
+    name: base_namespace
+    default: "GitHubApi.Repositories"
+  - label: Client class name
+    type: text
+    name: client_class
+    default: "GitHubRepositoriesApiClient"
+computed-inputs:
+  base_foldername: "{{inputs.base_namespace | replace('.', '/')}}"
+hooks:
+  - type: run
+    trigger: before-render
+    commands:
+      - dotnet add {{global_inputs.project_name}} package Microsoft.AspNet.WebApi.Client
+      - dotnet add {{global_inputs.project_name}} package Newtonsoft.Json
