@@ -1,0 +1,18 @@
+description: "Clients for GitHub public API (C#/dotnet)"
+name: github-api-clients
+display-name: github-api-clients
+picture: stack.png
+category: backend # Ref: https://docs.stackspot.com/latest/docs/creators-guide/yaml/#category
+compatibility: # Put a list of technologies compatible with the stack
+  - ".NET"
+  - "C#"
+technologies: # Ref: https://docs.stackspot.com/latest/docs/creators-guide/yaml/#technologies 
+  - ".NET"
+  - "Api"
+  - "C#"
+  - "Rest"
+about: docs/about.md
+use-cases:
+  - title: Use Case Title
+    content: docs/use-case.md
+    stackfile: stackfiles/default.yaml
