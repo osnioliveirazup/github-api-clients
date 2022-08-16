@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using System.Net.Http;
 using System.Threading.Tasks;
 using {{inputs.base_namespace}}.Models;
+using {{inputs.base_namespace}}.Options;
 
 namespace {{inputs.base_namespace}}.Example
 {
@@ -20,7 +21,19 @@ namespace {{inputs.base_namespace}}.Example
             // Suggestion is sending (registered) App name or GitHub username
             _client.UserAgent = username;
 
-            return await _client.GetRepositoriesForUserAsync(username);
+            var options = new GetRepositoriesForUserOptions
+            {
+                OwnershipType = OwnershipType.DEFAULT,
+                SortBy = SortBy.UPDATED,
+                SortDirection = SortDirection.ASC,
+                Pagination = new Pagination
+                {
+                    PerPage = 5,
+                    Page = 2
+                }
+            };
+
+            return await _client.GetRepositoriesForUserAsync(username, options);
         }
     }
 }

@@ -5,6 +5,7 @@ using System.Net.Http.Headers;
 using System.Threading.Tasks;
 using {{inputs.base_namespace}}.Config;
 using {{inputs.base_namespace}}.Models;
+using {{inputs.base_namespace}}.Options;
 
 namespace {{inputs.base_namespace}}
 {
@@ -29,16 +30,17 @@ namespace {{inputs.base_namespace}}
         // Documentation:
         // https://docs.github.com/en/rest/repos/repos#list-repositories-for-a-user
         //
-        // Notes:
-        //   Does not implement (yet) the Query parameters:
-        //   - type, sort, direction, per_page, page
-        //   See documentation for details
-        //
         public async Task<List<GetRepositoriesForUserResponse>> GetRepositoriesForUserAsync(string username)
         {
-            var endpoint = string.Format({{inputs.client_class}}Configuration.GetRepositoriesForUserEndpoint, username);
+            return await GetRepositoriesForUserAsync(username, GetRepositoriesForUserOptions.DefaultOptions());
+        }
 
-            using (var httpRequestMessage = new HttpRequestMessage(HttpMethod.Get, endpoint))
+        public async Task<List<GetRepositoriesForUserResponse>> GetRepositoriesForUserAsync(string username, GetRepositoriesForUserOptions options)
+        {
+            var endpoint = string.Format({{inputs.client_class}}Configuration.GetRepositoriesForUserEndpoint, username);
+            var uri = $"{endpoint}?{options.ToQueryString()}";
+
+            using (var httpRequestMessage = new HttpRequestMessage(HttpMethod.Get, uri))
             {
                 // GitHub Api requires a valid User-Agent header to be sent
                 // Suggestion is sending (registered) App name or GitHub username
